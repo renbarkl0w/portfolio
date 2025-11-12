@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0spjxju17n1t"]
+
+[ext_resource type="Script" path="res://Code/Items/item.gd" id="1_ujnt6"]
+
+[node name="Item" type="RigidBody2D"]
+collision_layer = 8
+script = ExtResource("1_ujnt6")

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxxk4m7quv8ia"]
+
+[ext_resource type="Texture2D" uid="uid://be75ac8qc15fa" path="res://Art/Bush Assets/Bush!-export.png" id="1_ywx6d"]
+[ext_resource type="PackedScene" uid="uid://cpkiahbfsqasf" path="res://Code/Items/food/berry_1.tscn" id="2_06mx0"]
+[ext_resource type="PackedScene" uid="uid://bhix1f5m4fuss" path="res://Code/Items/food/berry_2.tscn" id="3_w0krp"]
+[ext_resource type="PackedScene" uid="uid://cg2cbdpci4ym3" path="res://Code/Items/food/berry_3.tscn" id="4_s03ib"]
+
+[node name="Bush2-export" type="Sprite2D"]
+z_index = -1
+position = Vector2(0, -11)
+texture = ExtResource("1_ywx6d")
+
+[node name="Berry1" parent="." instance=ExtResource("2_06mx0")]
+position = Vector2(11, 3)
+rotation = 1.5708
+
+[node name="Berry2" parent="." instance=ExtResource("3_w0krp")]
+position = Vector2(-15, 1)
+
+[node name="Berry3" parent="." instance=ExtResource("3_w0krp")]
+position = Vector2(-7, 7)
+rotation = 1.0472
+
+[node name="Berry4" parent="." instance=ExtResource("4_s03ib")]
+position = Vector2(2, -4)
+rotation = 1.0472

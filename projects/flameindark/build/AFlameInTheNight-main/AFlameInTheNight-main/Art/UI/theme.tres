@@ -1,0 +1,56 @@
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://d30s8rilyqs28"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o57di"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.501961)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_afa0f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ubvc3"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+draw_center = false
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m07ma"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.6, 0.6, 0.6, 1)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i21em"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+draw_center = false
+border_width_bottom = 2
+border_color = Color(0.278431, 0.278431, 0.278431, 1)
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+corner_detail = 1
+
+[resource]
+Button/colors/font_color = Color(0.6, 0.6, 0.6, 1)
+Button/colors/font_disabled_color = Color(0, 0, 0, 0.501961)
+Button/colors/font_focus_color = Color(0.6, 0.6, 0.6, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_pressed_color = Color(0.28, 0.28, 0.28, 1)
+Button/font_sizes/font_size = 64
+Button/styles/disabled = SubResource("StyleBoxFlat_o57di")
+Button/styles/focus = SubResource("StyleBoxEmpty_afa0f")
+Button/styles/hover = SubResource("StyleBoxFlat_ubvc3")
+Button/styles/normal = SubResource("StyleBoxFlat_m07ma")
+Button/styles/pressed = SubResource("StyleBoxFlat_i21em")

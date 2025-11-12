@@ -1,0 +1,148 @@
+[gd_scene load_steps=14 format=3 uid="uid://c5jp4otbiggpa"]
+
+[ext_resource type="Script" path="res://Code/rat.gd" id="1_ko2bn"]
+[ext_resource type="PackedScene" uid="uid://b5l20kjkb34ba" path="res://Code/Items/food/dead_rat.tscn" id="2_p05hv"]
+[ext_resource type="Texture2D" uid="uid://brru4uo4rmdwp" path="res://Art/Rat/one chunk rat/Rat_0.png" id="3_kltry"]
+[ext_resource type="Texture2D" uid="uid://xbgiqcutrpby" path="res://Art/Rat/one chunk rat/Rat_1.png" id="4_7rj6b"]
+[ext_resource type="Texture2D" uid="uid://b2nbsnyaifs60" path="res://Art/Rat/one chunk rat/Rat_2.png" id="5_lty8q"]
+[ext_resource type="Texture2D" uid="uid://d2cbupkqa1dea" path="res://Art/Rat/one chunk rat/Rat_3.png" id="6_duncx"]
+[ext_resource type="Texture2D" uid="uid://d3dhks573lvdo" path="res://Art/Rat/one chunk rat/Rat_4.png" id="7_jc3y0"]
+[ext_resource type="Texture2D" uid="uid://cwm4myja3irp5" path="res://Art/Rat/one chunk rat/Rat_5.png" id="8_xgvpt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_06hei"]
+size = Vector2(5, 5)
+
+[sub_resource type="AnimatedTexture" id="AnimatedTexture_q6woc"]
+frames = 6
+frame_0/texture = ExtResource("3_kltry")
+frame_0/duration = 0.04
+frame_1/texture = ExtResource("4_7rj6b")
+frame_1/duration = 0.04
+frame_2/texture = ExtResource("5_lty8q")
+frame_2/duration = 0.04
+frame_3/texture = ExtResource("6_duncx")
+frame_3/duration = 0.04
+frame_4/texture = ExtResource("7_jc3y0")
+frame_4/duration = 0.04
+frame_5/texture = ExtResource("8_xgvpt")
+frame_5/duration = 0.04
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_m536m"]
+friction = 0.0
+absorbent = true
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_moaew"]
+friction = 0.0
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_njj7f"]
+size = Vector2(9, 2)
+
+[node name="Rat" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 5
+platform_floor_layers = 4278190081
+script = ExtResource("1_ko2bn")
+hop_velocity = 120.0
+jump_velocity = 200.0
+speed = 150.0
+snap_speed = 7e+06
+dead_rat = ExtResource("2_p05hv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_06hei")
+
+[node name="LittleHopVision" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+target_position = Vector2(-15, 0)
+
+[node name="JumpVision" type="RayCast2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -10)
+target_position = Vector2(-51, -13)
+collision_mask = 2
+
+[node name="LineSprite" type="Line2D" parent="."]
+unique_name_in_owner = true
+points = PackedVector2Array(-3, 0, 0, 0, 5, 0, 9, 0, 20, 0)
+width = 7.0
+texture = SubResource("AnimatedTexture_q6woc")
+texture_mode = 2
+
+[node name="Neck" type="PinJoint2D" parent="."]
+visible = false
+node_a = NodePath("..")
+node_b = NodePath("../UpperBody")
+softness = 1.0
+
+[node name="UpperBody" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(6, 0)
+collision_layer = 4
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_m536m")
+continuous_cd = 2
+linear_damp = 32.278
+angular_damp = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="UpperBody"]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_06hei")
+
+[node name="Spine" type="PinJoint2D" parent="UpperBody"]
+visible = false
+node_a = NodePath("..")
+node_b = NodePath("../../LowerBody")
+softness = 1.0
+
+[node name="LowerBody" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(10.5, 0)
+collision_layer = 4
+collision_mask = 5
+physics_material_override = SubResource("PhysicsMaterial_moaew")
+continuous_cd = 2
+linear_damp = 32.278
+angular_damp = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBody"]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_06hei")
+
+[node name="Butt" type="PinJoint2D" parent="LowerBody"]
+visible = false
+node_a = NodePath("..")
+node_b = NodePath("../../Tail")
+softness = 1.0
+
+[node name="Tail" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(17, 0)
+collision_layer = 0
+physics_material_override = SubResource("PhysicsMaterial_moaew")
+continuous_cd = 2
+linear_damp = 32.278
+angular_damp = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tail"]
+shape = SubResource("RectangleShape2D_njj7f")
+
+[node name="TailTip" type="Node2D" parent="Tail"]
+position = Vector2(5.5, 0)
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_06hei")
+
+[connection signal="body_entered" from="AttackArea" to="." method="_on_attack_area_body_entered"]

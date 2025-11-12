@@ -1,0 +1,158 @@
+[gd_scene load_steps=15 format=3 uid="uid://1ltcjpc8gk8j"]
+
+[ext_resource type="Script" path="res://Code/Player/player.gd" id="1_15kep"]
+[ext_resource type="Texture2D" uid="uid://dlmekth0syywv" path="res://Art/Player/FlameInDark_Player_falling_block.png" id="2_sb3en"]
+[ext_resource type="FontFile" uid="uid://ddal03xgmg1ni" path="res://Art/Font/PixelatedEleganceRegular-ovyAA.ttf" id="3_1werx"]
+[ext_resource type="AnimationLibrary" uid="uid://dsgeecvm802d0" path="res://Code/Player/player_anims.tres" id="3_2u8th"]
+[ext_resource type="Script" path="res://Code/Player/player_animation_state.gd" id="3_iloc8"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://idbmj4tnavex" path="res://Code/Player/player_anim_tree.tres" id="4_tflfr"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_s567l"]
+radius = 15.0
+height = 59.0
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_frtho"]
+size = Vector2(20, 20)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rq7nm"]
+size = Vector2(20, 20)
+
+[sub_resource type="Gradient" id="Gradient_pb4tu"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f2t58"]
+gradient = SubResource("Gradient_pb4tu")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_w0fnm"]
+texture = SubResource("GradientTexture2D_f2t58")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tddlw"]
+radius = 39.0512
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gl4pm"]
+radius = 30.0167
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hand", "backpack") groups=["Player"]]
+z_index = 10
+collision_layer = 2
+script = ExtResource("1_15kep")
+acceleration = 500.0
+decceleration = 400.0
+max_speed = 90.0
+jump_velocity = 300.0
+air_control = 0.4
+hand = NodePath("Sprite/Hand")
+backpack = [NodePath("Sprite/BackpackSlot1"), NodePath("Sprite/BackpackSlot2")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource("CapsuleShape2D_s567l")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-2, -2)
+texture = ExtResource("2_sb3en")
+
+[node name="Hand" type="Node2D" parent="Sprite"]
+position = Vector2(2, 11)
+rotation = 1.67837
+
+[node name="BackpackSlot1" type="Sprite2D" parent="Sprite"]
+clip_children = 1
+z_index = -1
+position = Vector2(-14, -12)
+rotation = 2.61989
+texture = SubResource("PlaceholderTexture2D_frtho")
+
+[node name="BackpackSlot2" type="Sprite2D" parent="Sprite"]
+clip_children = 1
+z_index = -1
+position = Vector2(-15, -6)
+rotation = -0.703835
+texture = SubResource("PlaceholderTexture2D_rq7nm")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+process_callback = 0
+limit_top = -110
+limit_bottom = -110
+position_smoothing_enabled = true
+
+[node name="InteractionPopup" type="Panel" parent="."]
+unique_name_in_owner = true
+offset_left = -30.0
+offset_top = -53.0
+offset_right = 31.0
+offset_bottom = -39.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_w0fnm")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InteractionPopup"]
+custom_minimum_size = Vector2(96.565, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.5
+offset_top = -11.0
+offset_right = 48.065
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3_1werx")
+theme_override_font_sizes/normal_font_size = 9
+bbcode_enabled = true
+text = "
+[center][wave amp=1
+0.0 freq=1.8 connected=1]Press E"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+
+[node name="PickupArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+visible = false
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_tddlw")
+debug_color = Color(0.439031, 0.593145, 0.253619, 0.0823529)
+
+[node name="InteractionArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+shape = SubResource("CircleShape2D_gl4pm")
+debug_color = Color(0.266018, 0.564532, 0.778041, 0.0823529)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": ExtResource("3_2u8th")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+unique_name_in_owner = true
+root_node = NodePath("%AnimationPlayer/..")
+tree_root = ExtResource("4_tflfr")
+advance_expression_base_node = NodePath("../..")
+anim_player = NodePath("..")
+parameters/conditions/damage = false
+parameters/conditions/death = false
+parameters/States/conditions/attack = false
+parameters/States/conditions/backpack = false
+parameters/States/conditions/death = false
+parameters/States/conditions/eat = false
+parameters/States/conditions/interact = false
+parameters/States/conditions/jump = false
+parameters/States/conditions/pick_up = false
+parameters/States/conditions/push = false
+script = ExtResource("3_iloc8")
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]

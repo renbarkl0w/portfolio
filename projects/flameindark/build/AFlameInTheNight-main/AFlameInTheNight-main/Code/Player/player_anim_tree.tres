@@ -1,0 +1,37 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=9 format=3 uid="uid://idbmj4tnavex"]
+
+[ext_resource type="AnimationNodeStateMachine" uid="uid://qd6t5i10sjgn" path="res://Art/Player/player_anim_state_machine.tres" id="1_mojhm"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_i63ph"]
+animation = &"death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_pdrpl"]
+animation = &"hurting"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qbvwt"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_d6xf7"]
+advance_mode = 2
+advance_condition = &"death"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_c258h"]
+advance_mode = 2
+advance_condition = &"damage"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_3u1c6"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_88vjo"]
+advance_mode = 2
+advance_condition = &"death"
+
+[resource]
+states/States/node = ExtResource("1_mojhm")
+states/States/position = Vector2(365, 100)
+states/death/node = SubResource("AnimationNodeAnimation_i63ph")
+states/death/position = Vector2(522, 97)
+states/hurting/node = SubResource("AnimationNodeAnimation_pdrpl")
+states/hurting/position = Vector2(365, 184)
+transitions = ["Start", "States", SubResource("AnimationNodeStateMachineTransition_qbvwt"), "States", "death", SubResource("AnimationNodeStateMachineTransition_d6xf7"), "States", "hurting", SubResource("AnimationNodeStateMachineTransition_c258h"), "hurting", "States", SubResource("AnimationNodeStateMachineTransition_3u1c6"), "hurting", "death", SubResource("AnimationNodeStateMachineTransition_88vjo")]

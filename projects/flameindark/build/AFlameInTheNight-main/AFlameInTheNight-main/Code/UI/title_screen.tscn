@@ -1,0 +1,107 @@
+[gd_scene load_steps=10 format=3 uid="uid://d3vjwgigufved"]
+
+[ext_resource type="Script" path="res://Code/UI/title_screen.gd" id="1_dsts6"]
+[ext_resource type="FontFile" uid="uid://cdeq64k1fr4i7" path="res://Art/Font/AncientModernTales-a7Po.ttf" id="2_l3kf1"]
+[ext_resource type="Theme" uid="uid://d30s8rilyqs28" path="res://Art/UI/theme.tres" id="3_aj4gv"]
+[ext_resource type="Script" path="res://Code/UI/quit_button.gd" id="5_iegyk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ok12w"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_xgy7w"]
+offsets = PackedFloat32Array(0, 0.891374, 1)
+colors = PackedColorArray(0.654364, 0.263354, 0, 1, 1, 0.59, 0.18, 1, 0.921475, 0.644236, 0.141233, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_myt0k"]
+gradient = SubResource("Gradient_xgy7w")
+fill_from = Vector2(0.632479, 0.824786)
+fill_to = Vector2(0.884615, 0.25641)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_577i7"]
+texture = SubResource("GradientTexture2D_myt0k")
+
+[sub_resource type="GDScript" id="GDScript_nxxf0"]
+resource_name = "Play"
+script/source = "extends Button
+
+@onready var victory_screen: CanvasLayer = $\"../../..\"
+
+func _pressed() -> void:
+	victory_screen.queue_free()
+"
+
+[node name="TitleScreen" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_dsts6")
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ok12w")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 258)
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("2_l3kf1")
+theme_override_font_sizes/font_size = 132
+text = "A Flame in the Dark"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Panel/VBoxContainer/Label"]
+clip_children = 1
+layout_mode = 1
+offset_right = 1152.0
+offset_bottom = 144.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_offset_x = 4
+theme_override_constants/shadow_offset_y = 4
+theme_override_fonts/font = ExtResource("2_l3kf1")
+theme_override_font_sizes/font_size = 132
+text = "A Flame in the Dark"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="Panel/VBoxContainer/Label/Label2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_577i7")
+
+[node name="Control" type="Control" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(10.36, 15)
+layout_mode = 2
+
+[node name="RestartButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_aj4gv")
+text = "Play"
+script = SubResource("GDScript_nxxf0")
+
+[node name="QuitButton" type="Button" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_aj4gv")
+text = "Quit"
+script = ExtResource("5_iegyk")

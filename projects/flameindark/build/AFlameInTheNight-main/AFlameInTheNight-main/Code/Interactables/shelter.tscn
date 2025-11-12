@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://drm8f3jp0xba2"]
+
+[ext_resource type="Texture2D" uid="uid://p1qxj21ydnwa" path="res://Art/Interactables/Shelter.png" id="1_06ita"]
+[ext_resource type="Script" path="res://Code/Interactables/shelter.gd" id="1_vt7ma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k17yw"]
+size = Vector2(4, 28)
+
+[node name="Shelter" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_vt7ma")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -2
+position = Vector2(4, -29)
+texture = ExtResource("1_06ita")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_k17yw")

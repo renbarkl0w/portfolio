@@ -1,0 +1,120 @@
+[gd_scene load_steps=8 format=3 uid="uid://du8k7i7gj7acm"]
+
+[ext_resource type="StyleBox" uid="uid://c2ayx0ldts0rj" path="res://Art/UI/bar_background.tres" id="1_l0x6m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_drtxm"]
+bg_color = Color(0.36, 0.1224, 0.1224, 1)
+corner_radius_top_right = 6
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="GDScript" id="GDScript_byioo"]
+resource_name = "HealthBar"
+script/source = "extends ProgressBar
+
+
+func _ready() -> void:
+	max_value = Player.inst.health
+
+
+func _process(delta: float) -> void:
+	value  = Player.inst.health
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dt530"]
+bg_color = Color(0.413698, 0.270681, 0.147497, 1)
+corner_radius_top_right = 6
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="GDScript" id="GDScript_ddpo0"]
+resource_name = "HungerBar"
+script/source = "extends ProgressBar
+
+
+func _ready() -> void:
+	max_value = Player.inst.hunger
+
+
+func _process(delta: float) -> void:
+	value  = Player.inst.hunger
+"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g7h6q"]
+bg_color = Color(0.167572, 0.207169, 0.321538, 1)
+corner_radius_top_right = 6
+corner_detail = 1
+anti_aliasing = false
+
+[sub_resource type="GDScript" id="GDScript_4gwcg"]
+resource_name = "TemperatureBar"
+script/source = "extends ProgressBar
+
+
+func _ready() -> void:
+	max_value = Player.inst.temperature
+
+
+func _process(delta: float) -> void:
+	value = Player.inst.temperature
+"
+
+[node name="Hud" type="CanvasLayer"]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_top = 6.0
+offset_right = 1032.0
+offset_bottom = 81.0
+theme_override_constants/separation = 9
+alignment = 2
+
+[node name="HealthBar" type="ProgressBar" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 9
+size_flags_vertical = 3
+theme_override_styles/background = ExtResource("1_l0x6m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_drtxm")
+max_value = 1.0
+value = 0.72
+show_percentage = false
+script = SubResource("GDScript_byioo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.75
+theme_override_constants/separation = 0
+
+[node name="HungerBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 11
+size_flags_vertical = 3
+theme_override_styles/background = ExtResource("1_l0x6m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_dt530")
+value = 50.0
+show_percentage = false
+script = SubResource("GDScript_ddpo0")
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme_override_constants/separation = 0
+
+[node name="TemperatureBar" type="ProgressBar" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 11
+size_flags_vertical = 3
+theme_override_styles/background = ExtResource("1_l0x6m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_g7h6q")
+value = 50.0
+show_percentage = false
+script = SubResource("GDScript_4gwcg")
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(600, 0)
+layout_mode = 2

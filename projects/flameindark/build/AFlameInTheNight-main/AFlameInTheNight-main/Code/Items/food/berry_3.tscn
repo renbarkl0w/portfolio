@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://cg2cbdpci4ym3"]
+
+[ext_resource type="PackedScene" uid="uid://d0spjxju17n1t" path="res://Code/Items/item.tscn" id="1_uxd2w"]
+[ext_resource type="Script" path="res://Code/Items/food/food.gd" id="2_3nogo"]
+[ext_resource type="Texture2D" uid="uid://cc7xk66sumrbj" path="res://Art/Bush Assets/Berry3-export.png" id="3_ppw42"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_53kwh"]
+radius = 3.0
+
+[node name="Berry3" instance=ExtResource("1_uxd2w")]
+freeze = true
+script = ExtResource("2_3nogo")
+food_value = 30.0
+use_animation = &"eat"
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+position = Vector2(0, -0.5)
+texture = ExtResource("3_ppw42")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
+position = Vector2(-1, 0)
+shape = SubResource("CircleShape2D_53kwh")

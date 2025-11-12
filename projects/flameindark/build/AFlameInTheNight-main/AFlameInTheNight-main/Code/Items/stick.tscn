@@ -1,0 +1,154 @@
+[gd_scene load_steps=15 format=3 uid="uid://b5gtjpil3acaq"]
+
+[ext_resource type="PackedScene" uid="uid://d0spjxju17n1t" path="res://Code/Items/item.tscn" id="1_31ksq"]
+[ext_resource type="Script" path="res://Code/Items/stick.gd" id="2_a4leo"]
+[ext_resource type="Texture2D" uid="uid://bc0p0jdixbr3m" path="res://Art/Items/Stick/Stick_1.png" id="3_11jbe"]
+[ext_resource type="Texture2D" uid="uid://lmcml8t32xc4" path="res://Art/Items/Stick/Stick_2.png" id="4_l7361"]
+[ext_resource type="Texture2D" uid="uid://crf5gwrdvfswg" path="res://Art/Items/Stick/Stick_3.png" id="5_2364y"]
+[ext_resource type="Texture2D" uid="uid://c1hvd5l7ojgph" path="res://Art/Items/Stick/Stick_4.png" id="6_x2agi"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_enb1q"]
+radius = 2.0
+height = 40.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e04ox"]
+size = Vector2(72.3347, 56.0233)
+
+[sub_resource type="Gradient" id="Gradient_wkbgx"]
+offsets = PackedFloat32Array(0, 0.466851, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0.418832, 0.206117, 1, 1, 0.729412, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_balx1"]
+gradient = SubResource("Gradient_wkbgx")
+
+[sub_resource type="Curve" id="Curve_6mdcs"]
+_data = [Vector2(0, 1), 0.0, 1.45751, 0, 0, Vector2(0.135897, 1), 0.0, 0.0, 0, 0, Vector2(0.561538, 0.718504), -0.902475, -0.902475, 0, 0, Vector2(1, 0), -1.63869, 0.0, 1, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_hbtsy"]
+curve = SubResource("Curve_6mdcs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_x4p2r"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 4.0
+direction = Vector3(0, -1, 0)
+spread = 83.54
+initial_velocity_max = 20.0
+gravity = Vector3(0, -10, 0)
+scale_curve = SubResource("CurveTexture_hbtsy")
+color_initial_ramp = SubResource("GradientTexture1D_balx1")
+turbulence_enabled = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8gubk"]
+radius = 55.0091
+
+[node name="Stick" node_paths=PackedStringArray("durability_sprites") instance=ExtResource("1_31ksq")]
+script = ExtResource("2_a4leo")
+warmth_amount = 2.0
+durability_sprites = [NodePath("SpriteRoot/Durability 0 Sprite"), NodePath("SpriteRoot/Durability 1 Sprite"), NodePath("SpriteRoot/Durability 2 Sprite"), NodePath("SpriteRoot/Durability 3 Sprite"), NodePath("SpriteRoot/Durability 4 Sprite")]
+use_animation = &"attack"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." index="0"]
+visible = false
+position = Vector2(0, -11)
+shape = SubResource("CapsuleShape2D_enb1q")
+
+[node name="HitArea2D" type="Area2D" parent="." index="1"]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea2D" index="0"]
+position = Vector2(12.4999, 8.9999)
+rotation = -1.57079
+scale = Vector2(0.691228, -0.767538)
+shape = SubResource("RectangleShape2D_e04ox")
+debug_color = Color(0.811765, 0.388235, 0.364706, 0.109804)
+
+[node name="ExtinguishTimer" type="Timer" parent="." index="2"]
+unique_name_in_owner = true
+wait_time = 10.0
+one_shot = true
+
+[node name="FireDurabilityTimer" type="Timer" parent="." index="3"]
+unique_name_in_owner = true
+wait_time = 15.0
+
+[node name="SpriteRoot" type="Node2D" parent="." index="4"]
+unique_name_in_owner = true
+position = Vector2(0, 10)
+
+[node name="Durability 0 Sprite" type="Sprite2D" parent="SpriteRoot" index="0"]
+centered = false
+offset = Vector2(-2, 0)
+flip_v = true
+
+[node name="FireLocation" type="Node2D" parent="SpriteRoot/Durability 0 Sprite" index="0"]
+position = Vector2(0, -2)
+
+[node name="Durability 1 Sprite" type="Sprite2D" parent="SpriteRoot" index="1"]
+unique_name_in_owner = true
+scale = Vector2(1, -1)
+texture = ExtResource("3_11jbe")
+centered = false
+offset = Vector2(-2, 0)
+flip_v = true
+
+[node name="FireLocation" type="Node2D" parent="SpriteRoot/Durability 1 Sprite" index="0"]
+position = Vector2(0, 12)
+
+[node name="Durability 2 Sprite" type="Sprite2D" parent="SpriteRoot" index="2"]
+unique_name_in_owner = true
+scale = Vector2(1, -1)
+texture = ExtResource("4_l7361")
+centered = false
+offset = Vector2(-2, 0)
+flip_v = true
+
+[node name="FireLocation" type="Node2D" parent="SpriteRoot/Durability 2 Sprite" index="0"]
+position = Vector2(0, 25)
+
+[node name="Durability 3 Sprite" type="Sprite2D" parent="SpriteRoot" index="3"]
+unique_name_in_owner = true
+scale = Vector2(1, -1)
+texture = ExtResource("5_2364y")
+centered = false
+offset = Vector2(-2, 0)
+flip_v = true
+
+[node name="FireLocation" type="Node2D" parent="SpriteRoot/Durability 3 Sprite" index="0"]
+position = Vector2(0, 31)
+
+[node name="Durability 4 Sprite" type="Sprite2D" parent="SpriteRoot" index="4"]
+unique_name_in_owner = true
+scale = Vector2(1, -1)
+texture = ExtResource("6_x2agi")
+centered = false
+offset = Vector2(-2, 0)
+flip_v = true
+
+[node name="FireLocation" type="Node2D" parent="SpriteRoot/Durability 4 Sprite" index="0"]
+position = Vector2(0, 38)
+
+[node name="FireParticles" type="GPUParticles2D" parent="SpriteRoot" index="5"]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -2)
+amount = 1000
+process_material = SubResource("ParticleProcessMaterial_x4p2r")
+lifetime = 3.0
+
+[node name="WarmthArea" type="Area2D" parent="." index="5"]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WarmthArea" index="0"]
+visible = false
+position = Vector2(1, -9)
+shape = SubResource("CircleShape2D_8gubk")
+debug_color = Color(0.67, 0.498033, 0.201, 0.0666667)
+
+[connection signal="timeout" from="ExtinguishTimer" to="." method="_on_extinguish_timer_timeout"]
+[connection signal="timeout" from="FireDurabilityTimer" to="." method="_on_fire_durability_timer_timeout"]
